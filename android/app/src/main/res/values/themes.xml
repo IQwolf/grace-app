@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App theme with Android 12+ Splash support -->
+    <style name="Theme.App" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <!-- Android 12+ system splash -->
+        <item name="android:windowSplashScreenBackground">@color/brand_primary</item>
+        <!-- Use the app icon for splash to ensure crisp rendering on all DPIs -->
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+
+        <!-- Pre-Android 12 fallback -->
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+</resources>

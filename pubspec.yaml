@@ -1,0 +1,68 @@
+name: grace_academy
+description: "Grace Academy - منصة تعليمية متكاملة لتقديم المحاضرات الدراسية مع حماية متقدمة للمحتوى وتجربة مستخدم سلسة."
+publish_to: "none"
+version: 1.0.1+4
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  url_launcher: ^6.3.1
+  flutter_svg: ^2.0.15
+  http: ^1.2.2
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # Firebase packages
+  firebase_core: ^4.2.1
+  firebase_auth: ^6.0.1
+  cloud_firestore: ^6.0.0
+  cloud_functions: ^6.0.4
+  firebase_messaging: ^16.0.4
+  firebase_storage: ^13.0.4
+
+  # Other dependencies
+  package_info_plus: ^8.0.0
+  wakelock_plus: ^1.2.11
+  cupertino_icons: ^1.0.8
+  google_fonts: ^6.3.0
+  flutter_riverpod: ^3.0.0
+  go_router: ^17.0.0
+  video_player: ^2.9.2
+  chewie: ^1.8.5
+  cached_network_image: ^3.4.1
+  carousel_slider: ^5.0.0
+  shared_preferences: ^2.3.5
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/images/
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  web:
+    generate: true
+    image_path: assets/images/logononbackground.png
+    background_color: "#FFFFFF"
+    theme_color: "#FFFFFF"
+
+  image_path: assets/images/logononbackground.png
+
+  # ANDROID (Adaptive Icons)
+  adaptive_icon_foreground: assets/images/logononbackground.png
+  adaptive_icon_background: "#FFFFFF"
+
+  # iOS
+  remove_alpha_ios: true

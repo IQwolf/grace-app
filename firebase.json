@@ -1,0 +1,41 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "grace-academy-873a7",
+          "appId": "1:438957453959:android:95f60aa9245b7edcffbe22",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "grace-academy-873a7",
+          "configurations": {
+            "android": "1:438957453959:android:95f60aa9245b7edcffbe22",
+            "ios": "1:438957453959:ios:5d6681cb023f794dffbe22",
+            "web": "1:438957453959:web:fa6ca48de5c0e440ffbe22"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

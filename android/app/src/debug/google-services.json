@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "438957453959",
+    "project_id": "grace-academy-873a7",
+    "storage_bucket": "grace-academy-873a7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438957453959:android:1d1b79533a95c802ffbe22",
+        "android_client_info": {
+          "package_name": "com.futuer.grace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGlFegJbHCNIjah48OEjmgHnLS_Ga4yQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438957453959:android:1f8104958cc0a5e0ffbe22",
+        "android_client_info": {
+          "package_name": "com.futurecode.grace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGlFegJbHCNIjah48OEjmgHnLS_Ga4yQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438957453959:android:95f60aa9245b7edcffbe22",
+        "android_client_info": {
+          "package_name": "com.mycompany.CounterApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGlFegJbHCNIjah48OEjmgHnLS_Ga4yQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

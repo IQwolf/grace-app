@@ -1,0 +1,63 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.7.3'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    // Keep androidx.media3 aligned across all modules/plugins
+    configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'androidx.media3') {
+                details.useVersion '1.5.1'
+                details.because('Align media3 artifacts for video playback dependencies')
+            }
+        }
+    }
+}
+
+rootProject.buildDir = "../build"
+
+subprojects {
+    // Use a shared build directory for subprojects
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+
+// Clean task
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+
+// Enforce Java & Kotlin targets globally without afterEvaluate
+subprojects {
+    // Java 17 across all JavaCompile tasks
+    tasks.withType(JavaCompile).configureEach {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    // Kotlin JVM target where Kotlin is applied
+    plugins.withId("kotlin-android") {
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
+    }
+    plugins.withId("org.jetbrains.kotlin.jvm") {
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            kotlinOptions {
+                jvmTarget = "17"
+            }
+        }
+    }
+}

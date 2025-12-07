@@ -1,0 +1,108 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+    
+    function hasValidUserData() {
+      return request.resource.data.keys().hasAll(['name', 'phone', 'governorate', 'university', 'birthDate', 'gender']) &&
+             request.resource.data.name is string &&
+             request.resource.data.phone is string &&
+             request.resource.data.governorate is string &&
+             request.resource.data.university is string &&
+             request.resource.data.birthDate is string &&
+             request.resource.data.gender in ['male', 'female'];
+    }
+    
+    // Users collection - Private pattern
+    match /users/{userId} {
+      // Only authenticated users can read their own profile
+      allow read: if isOwner(userId);
+      
+      // Users can create their own profile with valid data
+      allow create: if isOwner(userId) && hasValidUserData();
+      
+      // Users can update their own profile
+      allow update: if isOwner(userId) && hasValidUserData();
+      
+      // Users cannot delete their profile
+      allow delete: if false;
+    }
+    
+    // Majors collection - Public pattern
+    match /majors/{majorId} {
+      // All authenticated users can read majors
+      allow read: if isAuthenticated();
+      
+      // Only admin can write majors (implement admin check as needed)
+      allow write: if false; // Change to admin check when ready
+    }
+    
+    // Instructors collection - Public pattern
+    match /instructors/{instructorId} {
+      // All authenticated users can read instructors
+      allow read: if isAuthenticated();
+      
+      // Only admin can write instructors
+      allow write: if false; // Change to admin check when ready
+    }
+    
+    // Courses collection - Public pattern
+    match /courses/{courseId} {
+      // All authenticated users can read courses
+      allow read: if isAuthenticated();
+      
+      // Only admin can write courses
+      allow write: if false; // Change to admin check when ready
+    }
+    
+    // Lectures collection - Public pattern for course structure
+    match /lectures/{lectureId} {
+      // All authenticated users can read lectures
+      // Note: Video access should be controlled by enrollment check in app logic
+      allow read: if isAuthenticated();
+      
+      // Only admin can write lectures
+      allow write: if false; // Change to admin check when ready
+    }
+    
+    // Enrollments collection - Private pattern with course access
+    match /enrollments/{enrollmentId} {
+      // Users can read their own enrollments
+      allow read: if isAuthenticated() && request.auth.uid == resource.data.userId;
+      
+      // Users can create enrollments for themselves (usually done by admin/payment system)
+      // In production, this should be restricted to admin or payment webhook
+      allow create: if isAuthenticated() && 
+                    request.auth.uid == request.resource.data.userId &&
+                    request.resource.data.keys().hasAll(['userId', 'courseId', 'enrolledAt', 'status', 'expiresAt']);
+      
+      // Users cannot update or delete enrollments directly
+      allow update, delete: if false; // Change to admin check when ready
+    }
+    
+    // User progress collection - Private pattern
+    match /user_progress/{progressId} {
+      // Users can read their own progress
+      allow read: if isAuthenticated() && request.auth.uid == resource.data.userId;
+      
+      // Users can create/update their own progress
+      allow create, update: if isAuthenticated() && 
+                           request.auth.uid == request.resource.data.userId &&
+                           request.resource.data.keys().hasAll(['userId', 'lectureId', 'courseId', 'watchedDuration', 'totalDuration']);
+      
+      // Users cannot delete progress
+      allow delete: if false;
+    }
+    
+    // Deny all other access
+    allow read, write: if false;
+  }
+}
