@@ -223,6 +223,23 @@ class FirebaseApiClient implements ApiClient {
     }
   }
 
+  // ---------------- Account Deletion ----------------
+
+  @override
+  Future<Result<String>> sendDeleteAccountOtp(String phone) async {
+    return const Failure('حذف الحساب غير مدعوم في هذا الإصدار');
+  }
+
+  @override
+  Future<Result<String>> verifyDeleteAccountOtp(String phone, String otp, String requestId) async {
+    return const Failure('حذف الحساب غير مدعوم في هذا الإصدار');
+  }
+
+  @override
+  Future<Result<void>> confirmDeleteAccount(String phone, String verificationToken) async {
+    return const Failure('حذف الحساب غير مدعوم في هذا الإصدار');
+  }
+
   @override
   Future<Result<List<MajorLevels>>> getMajorsWithLevels() async {
     try {

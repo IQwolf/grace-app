@@ -43,6 +43,7 @@ class RestApiClient implements ApiClient {
     final headers = <String, String>{};
     if (json) {
       headers['Content-Type'] = 'application/json';
+      headers['Accept'] = 'application/json';
     }
 
     if (!withAuth) {
@@ -86,6 +87,14 @@ class RestApiClient implements ApiClient {
     final baseStr = '${normalizedBase.scheme}://${normalizedBase.authority}${normalizedBase.path.isEmpty ? '' : normalizedBase.path}';
     final full = '$baseStr${path.startsWith('/') ? path : '/$path'}';
     return Uri.parse(full).replace(queryParameters: query);
+  }
+
+  // Heuristics to detect non-JSON (e.g., HTML landing pages) in 2xx responses
+  bool _isJsonResponse(http.Response res) {
+    final ct = (res.headers['content-type'] ?? res.headers['Content-Type'] ?? '').toLowerCase();
+    if (ct.contains('application/json') || ct.contains('json')) return true;
+    final body = res.body.trimLeft();
+    return body.startsWith('{') || body.startsWith('[');
   }
 
   Uri _functionsUrl(String path) {
@@ -486,6 +495,153 @@ class RestApiClient implements ApiClient {
     }
   }
 
+  // ---------------- Account Deletion ----------------
+  // Note: These endpoints do NOT require Authorization token.
+  // Verification is done via OTP instead.
+
+  @override
+  Future<Result<String>> sendDeleteAccountOtp(String phone) async {
+    try {
+      final uri = _u('/api/delete-account/send-otp');
+      final requestBody = jsonEncode({'phone': phone});
+      final headers = {'Content-Type': 'application/json'};
+      
+      final res = await http.post(
+        uri,
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        if (!_isJsonResponse(res)) {
+          return const Failure('استجابة غير صالحة من الخادم أثناء إرسال الرمز');
+        }
+        final data = jsonDecode(res.body) as Map<String, dynamic>;
+        final requestId = (data['requestId'] ?? '').toString();
+        if (requestId.isEmpty) {
+          return const Failure('فشل في بدء عملية الحذف. لم يتم استلام requestId');
+        }
+        return Success(requestId);
+      }
+      
+      // Handle 404 - Account not found
+      if (res.statusCode == 404) {
+        try {
+          final data = jsonDecode(res.body) as Map<String, dynamic>;
+          final error = (data['error'] ?? 'الحساب غير موجود').toString();
+          return Failure(error);
+        } catch (_) {
+          return const Failure('الحساب غير موجود');
+        }
+      }
+      
+      return Failure(_mapHttpError(res));
+    } catch (e) {
+      return Failure('خطأ في الشبكة: $e');
+    }
+  }
+
+  @override
+  Future<Result<String>> verifyDeleteAccountOtp(String phone, String otp, String requestId) async {
+    try {
+      final uri = _u('/api/delete-account/verify-otp');
+      final requestBody = jsonEncode({
+        'phone': phone,
+        'otp': otp,
+        'requestId': requestId,
+      });
+      final headers = {'Content-Type': 'application/json'};
+      
+      final res = await http.post(
+        uri,
+        headers: headers,
+        body: requestBody,
+      );
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        if (!_isJsonResponse(res)) {
+          return const Failure('استجابة غير صالحة من الخادم أثناء التحقق من الرمز');
+        }
+        final data = jsonDecode(res.body) as Map<String, dynamic>;
+        final token = (data['verificationToken'] ?? '').toString();
+        if (token.isEmpty) {
+          return const Failure('رمز التحقق صحيح ولكن لم يتم استلام رمز التأكيد');
+        }
+        return Success(token);
+      }
+      
+      // Handle OTP errors
+      if (res.statusCode == 400 || res.statusCode == 401 || res.statusCode == 422) {
+        try {
+          final data = jsonDecode(res.body) as Map<String, dynamic>;
+          final error = (data['error'] ?? '').toString();
+          if (error.contains('Invalid OTP')) {
+            return const Failure('رمز التحقق غير صحيح');
+          } else if (error.contains('expired')) {
+            return const Failure('انتهت صلاحية رمز التحقق');
+          } else if (error.contains('Invalid or expired request')) {
+            return const Failure('انتهت صلاحية الطلب، يرجى المحاولة مرة أخرى');
+          }
+          return Failure(error.isNotEmpty ? error : 'رمز OTP غير صحيح أو منتهي الصلاحية');
+        } catch (_) {
+          return const Failure('رمز OTP غير صحيح أو منتهي الصلاحية');
+        }
+      }
+      
+      return Failure(_mapHttpError(res));
+    } catch (e) {
+      return Failure('خطأ في التحقق: $e');
+    }
+  }
+
+  @override
+  Future<Result<void>> confirmDeleteAccount(String phone, String verificationToken) async {
+    try {
+      final uri = _u('/api/delete-account/confirm');
+      final requestBody = jsonEncode({
+        'phone': phone,
+        'verificationToken': verificationToken,
+      });
+      
+      // DELETE request with body requires http.Request
+      final request = http.Request('DELETE', uri);
+      request.headers['Content-Type'] = 'application/json';
+      request.body = requestBody;
+      
+      final streamedResponse = await request.send();
+      final res = await http.Response.fromStream(streamedResponse);
+
+      if (res.statusCode >= 200 && res.statusCode < 300) {
+        if (!_isJsonResponse(res) && res.body.isNotEmpty) {
+          return const Failure('استجابة غير صالحة من الخادم أثناء تأكيد الحذف');
+        }
+        return const Success(null);
+      }
+      
+      // Handle confirmation errors
+      if (res.statusCode == 400 || res.statusCode == 401 || res.statusCode == 422) {
+        try {
+          final data = jsonDecode(res.body) as Map<String, dynamic>;
+          final error = (data['error'] ?? '').toString();
+          if (error.contains('Invalid or expired verification token')) {
+            return const Failure('رمز التأكيد غير صالح أو منتهي الصلاحية');
+          } else if (error.contains('Verification token expired')) {
+            return const Failure('انتهت صلاحية رمز التأكيد (10 دقائق)');
+          } else if (error.contains('Phone number does not match')) {
+            return const Failure('رقم الهاتف لا يتطابق مع الرمز');
+          }
+          return Failure(error.isNotEmpty ? error : 'فشل تأكيد الحذف');
+        } catch (_) {
+          return const Failure('فشل تأكيد الحذف');
+        }
+      }
+      
+      return Failure(_mapHttpError(res));
+    } catch (e) {
+      return Failure('خطأ في تأكيد الحذف: $e');
+    }
+  }
+
   // ---------------- Notifications ----------------
 
   @override
@@ -510,24 +666,30 @@ class RestApiClient implements ApiClient {
   @override
   Future<Result<List<AppNotification>>> getNotifications({required String studentId}) async {
     try {
-      final uri = _u('/api/notifications', {'studentId': studentId});
+      // Use direct root path to avoid accidental HTML responses on some deployments
+      final uri = _u('/notifications', {'studentId': studentId});
       debugPrint('[RestApiClient] getNotifications → GET ${uri.toString()}');
       final res = await http.get(uri, headers: await _headers(withAuth: true));
       if (res.statusCode >= 200 && res.statusCode < 300) {
+        if (!_isJsonResponse(res)) {
+          debugPrint('[RestApiClient] getNotifications non-JSON 2xx body: '
+              '${res.body.substring(0, res.body.length > 160 ? 160 : res.body.length)}');
+          return const Failure('استجابة غير صالحة من الخادم أثناء تحميل الإشعارات');
+        }
         final decoded = jsonDecode(res.body);
-         List<Map<String, dynamic>> items;
-         if (decoded is Map<String, dynamic>) {
-           items = (decoded['items'] as List<dynamic>? ?? []).cast<Map<String, dynamic>>();
-         } else if (decoded is List) {
-           items = decoded.cast<Map<String, dynamic>>();
-         } else {
-           items = <Map<String, dynamic>>[];
-         }
-         final list = items.map((m) => AppNotification.fromJson(m)).toList()
-           ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
-         return Success(list);
-       }
-       return Failure(_mapHttpError(res));
+        List<Map<String, dynamic>> items;
+        if (decoded is Map<String, dynamic>) {
+          items = (decoded['items'] as List<dynamic>? ?? []).cast<Map<String, dynamic>>();
+        } else if (decoded is List) {
+          items = decoded.cast<Map<String, dynamic>>();
+        } else {
+          items = <Map<String, dynamic>>[];
+        }
+        final list = items.map((m) => AppNotification.fromJson(m)).toList()
+          ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+        return Success(list);
+      }
+      return Failure(_mapHttpError(res));
       } catch (e) {
         return Failure('خطأ في تحميل الإشعارات: $e');
      }
@@ -536,7 +698,8 @@ class RestApiClient implements ApiClient {
   @override
   Future<Result<void>> markNotificationAsRead(String notificationId) async {
     try {
-      final uri = _u('/api/notifications/$notificationId/read');
+      // Use direct root path to match getNotifications
+      final uri = _u('/notifications/$notificationId/read');
       debugPrint('[RestApiClient] markNotificationAsRead → PUT ${uri.toString()}');
       final res = await http.put(uri, headers: await _headers(withAuth: true));
       if (res.statusCode >= 200 && res.statusCode < 300) {

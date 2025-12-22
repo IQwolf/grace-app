@@ -159,7 +159,7 @@
     },
     {
       "name": "crypto",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.7",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.6",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -315,9 +315,9 @@
     },
     {
       "name": "flutter_svg",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_svg-2.2.3",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_svg-2.2.1",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.7"
     },
     {
       "name": "flutter_test",
@@ -363,7 +363,7 @@
     },
     {
       "name": "http",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.6.0",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.4.0",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -519,15 +519,15 @@
     },
     {
       "name": "path_provider_android",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.19",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.2.17",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.6"
     },
     {
       "name": "path_provider_foundation",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.4.2",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.4.1",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.3"
     },
     {
       "name": "path_provider_linux",
@@ -552,6 +552,12 @@
       "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/petitparser-7.0.1",
       "packageUri": "lib/",
       "languageVersion": "3.8"
+    },
+    {
+      "name": "pinput",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/pinput-6.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
     },
     {
       "name": "platform",
@@ -609,7 +615,7 @@
     },
     {
       "name": "shared_preferences_android",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_android-2.4.13",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_android-2.4.12",
       "packageUri": "lib/",
       "languageVersion": "3.7"
     },
@@ -690,6 +696,12 @@
       "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.1",
       "packageUri": "lib/",
       "languageVersion": "3.1"
+    },
+    {
+      "name": "sprintf",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/sprintf-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "sqflite",
@@ -801,9 +813,9 @@
     },
     {
       "name": "url_launcher_linux",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_linux-3.2.2",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_linux-3.2.1",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.3"
     },
     {
       "name": "url_launcher_macos",
@@ -825,13 +837,13 @@
     },
     {
       "name": "url_launcher_windows",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_windows-3.1.5",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_windows-3.1.4",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.4"
     },
     {
       "name": "uuid",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.5.2",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.5.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -861,13 +873,13 @@
     },
     {
       "name": "video_player",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/video_player-2.10.1",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/video_player-2.10.0",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.6"
     },
     {
       "name": "video_player_android",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_android-2.8.15",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_android-2.8.13",
       "packageUri": "lib/",
       "languageVersion": "3.7"
     },
@@ -879,9 +891,9 @@
     },
     {
       "name": "video_player_platform_interface",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_platform_interface-6.6.0",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_platform_interface-6.4.0",
       "packageUri": "lib/",
-      "languageVersion": "3.7"
+      "languageVersion": "3.6"
     },
     {
       "name": "video_player_web",
@@ -939,7 +951,7 @@
     },
     {
       "name": "win32",
-      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/win32-5.15.0",
+      "rootUri": "file:///C:/Users/IQwolf/AppData/Local/Pub/Cache/hosted/pub.dev/win32-5.14.0",
       "packageUri": "lib/",
       "languageVersion": "3.8"
     },

@@ -32,10 +32,10 @@ final currentUserProvider = Provider<User?>((ref) {
 final appUserProvider = FutureProvider<app_user.User?>((ref) async {
   final currentUser = ref.watch(currentUserProvider);
   if (currentUser == null) return null;
-
+  
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.getUser(currentUser.uid);
-
+  
   return result.when(
     success: (user) => user,
     failure: (_) => null,
@@ -60,11 +60,11 @@ class AuthController extends Notifier<AsyncValue<void>> {
   // Send OTP
   Future<Result<void>> sendOTP(String phoneNumber) async {
     state = const AsyncValue.loading();
-
+    
     _phoneNumber = _authRepository.formatPhoneNumber(phoneNumber);
-
+    
     final completer = Completer<Result<void>>();
-
+    
     final result = await _authRepository.sendOTP(
       phoneNumber: _phoneNumber!,
       onVerificationCompleted: (PhoneAuthCredential credential) async {
@@ -84,21 +84,21 @@ class AuthController extends Notifier<AsyncValue<void>> {
         completer.complete(Failure(error.message ?? 'فشل في إرسال OTP'));
       },
     );
-
+    
     if (result.isFailure) {
       state = AsyncValue.error(result.error ?? 'Unknown error', StackTrace.current);
       return result;
     }
-
+    
     // Wait for the completion
     final finalResult = await completer.future;
-
+    
     if (finalResult.isSuccess) {
       state = const AsyncValue.data(null);
     } else {
       state = AsyncValue.error(finalResult.error ?? 'Unknown error', StackTrace.current);
     }
-
+    
     return finalResult;
   }
 
@@ -107,20 +107,20 @@ class AuthController extends Notifier<AsyncValue<void>> {
     if (_verificationId == null) {
       return const Failure('لم يتم إرسال رمز التحقق');
     }
-
+    
     state = const AsyncValue.loading();
-
+    
     final result = await _authRepository.verifyOTP(
       verificationId: _verificationId!,
       otpCode: otpCode,
     );
-
+    
     if (result.isSuccess) {
       state = const AsyncValue.data(null);
     } else {
       state = AsyncValue.error(result.error ?? 'Unknown error', StackTrace.current);
     }
-
+    
     return result;
   }
 
@@ -136,9 +136,9 @@ class AuthController extends Notifier<AsyncValue<void>> {
     if (currentUser == null || _phoneNumber == null) {
       return const Failure('المستخدم غير مسجل الدخول');
     }
-
+    
     state = const AsyncValue.loading();
-
+    
     final user = app_user.User(
       id: currentUser.uid,
       phone: _phoneNumber!,
@@ -148,27 +148,27 @@ class AuthController extends Notifier<AsyncValue<void>> {
       birthDate: birthDate,
       gender: gender,
     );
-
+    
     final result = await _firestoreRepository.createUser(
       userId: currentUser.uid,
       user: user,
     );
-
+    
     if (result.isSuccess) {
       state = const AsyncValue.data(null);
     } else {
       state = AsyncValue.error(result.error ?? 'Unknown error', StackTrace.current);
     }
-
+    
     return result;
   }
 
   // Sign out
   Future<Result<void>> signOut() async {
     state = const AsyncValue.loading();
-
+    
     final result = await _authRepository.signOut();
-
+    
     if (result.isSuccess) {
       _verificationId = null;
       _phoneNumber = null;
@@ -176,16 +176,16 @@ class AuthController extends Notifier<AsyncValue<void>> {
     } else {
       state = AsyncValue.error(result.error ?? 'Unknown error', StackTrace.current);
     }
-
+    
     return result;
   }
 
   // Delete account
   Future<Result<void>> deleteAccount() async {
     state = const AsyncValue.loading();
-
+    
     final result = await _authRepository.deleteAccount();
-
+    
     if (result.isSuccess) {
       _verificationId = null;
       _phoneNumber = null;
@@ -193,7 +193,7 @@ class AuthController extends Notifier<AsyncValue<void>> {
     } else {
       state = AsyncValue.error(result.error ?? 'Unknown error', StackTrace.current);
     }
-
+    
     return result;
   }
 

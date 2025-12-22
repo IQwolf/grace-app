@@ -7,6 +7,7 @@ import 'package:grace_academy/data/models/user.dart';
 import 'package:grace_academy/features/auth/auth_controller.dart';
 import 'package:grace_academy/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:grace_academy/features/account/delete_account_dialog.dart';
 
 class AccountPage extends ConsumerWidget {
   const AccountPage({super.key});
@@ -242,6 +243,14 @@ class AccountPage extends ConsumerWidget {
                       title: AppStrings.editAccount,
                       onTap: () => _navigateToEditAccount(context),
                     ),
+                    _buildDivider(),
+                    _buildActionTile(
+                      context,
+                      icon: Icons.delete_forever,
+                      title: 'حذف الحساب',
+                      isDestructive: true,
+                      onTap: () => _showDeleteAccountDialog(context, user.phone),
+                    ),
                   ],
                 ),
               ),
@@ -427,6 +436,14 @@ class AccountPage extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _showDeleteAccountDialog(BuildContext context, String phoneNumber) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => DeleteAccountDialog(phoneNumber: phoneNumber),
     );
   }
 

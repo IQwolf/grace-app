@@ -1,88 +1,98 @@
- import 'package:grace_academy/core/mock_data.dart';
- import 'package:grace_academy/core/result.dart';
- import 'package:grace_academy/data/models/course.dart';
- import 'package:grace_academy/data/models/instructor.dart';
- import 'package:grace_academy/data/models/lecture.dart';
- import 'package:grace_academy/data/models/major.dart';
- import 'package:grace_academy/data/models/user.dart';
+import 'package:grace_academy/core/mock_data.dart';
+import 'package:grace_academy/core/result.dart';
+import 'package:grace_academy/data/models/course.dart';
+import 'package:grace_academy/data/models/instructor.dart';
+import 'package:grace_academy/data/models/lecture.dart';
+import 'package:grace_academy/data/models/major.dart';
+import 'package:grace_academy/data/models/user.dart';
 import 'package:grace_academy/data/models/auth_session.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:grace_academy/data/models/major_levels.dart';
 import 'package:grace_academy/data/models/app_notification.dart';
 import 'package:grace_academy/data/models/university.dart';
- 
- /// Abstract API client interface for all backend operations
- abstract class ApiClient {
-   /// Authentication operations (Telegram Gateway via Cloud Functions)
-   /// Returns requestId to be used with verifyOtp.
-   Future<Result<String>> startOtp(String phone);
- 
-   /// Verifies OTP and returns existing user or 'new_user' failure to indicate profile is required.
-   Future<Result<OtpVerificationResult>> verifyOtp(String phone, String otp, String requestId);
- 
-   Future<Result<bool>> hasAccount(String phone);
-   Future<Result<User>> createProfile({
-     required String phone,
-     required String name,
-     required String governorate,
-     required String university,
-     required DateTime birthDate,
-     required Gender gender,
-   });
 
-    Future<Result<User>> getCurrentUser();
-    Future<Result<User>> updateProfile({
-      String? name,
-      String? governorate,
-      String? university,
-      DateTime? birthDate,
-      Gender? gender,
-      String? telegramUsername,
-    });
+/// Abstract API client interface for all backend operations
+abstract class ApiClient {
+  /// Authentication operations (Telegram Gateway via Cloud Functions)
+  /// Returns requestId to be used with verifyOtp.
+  Future<Result<String>> startOtp(String phone);
 
-    Future<Result<String?>> getTelegramUsername({required String phoneNumber});
-    Future<Result<void>> updateTelegramUsername({
-      required String phoneNumber,
-      required String telegramUsername,
-    });
- 
-   /// Notifications
-   Future<Result<void>> saveFcmToken({required String studentId, required String phoneNumber, required String fcmToken});
-   Future<Result<List<AppNotification>>> getNotifications({required String studentId});
-   Future<Result<void>> markNotificationAsRead(String notificationId);
- 
-   /// Catalog operations
-   Future<Result<List<Major>>> getMajors();
-   Future<Result<List<String>>> getLevels();
+  /// Verifies OTP and returns existing user or 'new_user' failure to indicate profile is required.
+  Future<Result<OtpVerificationResult>> verifyOtp(String phone, String otp, String requestId);
+
+  Future<Result<bool>> hasAccount(String phone);
+  Future<Result<User>> createProfile({
+    required String phone,
+    required String name,
+    required String governorate,
+    required String university,
+    required DateTime birthDate,
+    required Gender gender,
+  });
+
+  Future<Result<User>> getCurrentUser();
+  Future<Result<User>> updateProfile({
+    String? name,
+    String? governorate,
+    String? university,
+    DateTime? birthDate,
+    Gender? gender,
+    String? telegramUsername,
+  });
+
+  Future<Result<String?>> getTelegramUsername({required String phoneNumber});
+  Future<Result<void>> updateTelegramUsername({
+    required String phoneNumber,
+    required String telegramUsername,
+  });
+
+  /// Account Deletion
+  /// Step 1: Send OTP for account deletion. Returns requestId.
+  Future<Result<String>> sendDeleteAccountOtp(String phone);
+  
+  /// Step 2: Verify OTP for account deletion. Returns verificationToken.
+  Future<Result<String>> verifyDeleteAccountOtp(String phone, String otp, String requestId);
+
+  /// Step 3: Confirm account deletion using verificationToken.
+  Future<Result<void>> confirmDeleteAccount(String phone, String verificationToken);
+
+  /// Notifications
+  Future<Result<void>> saveFcmToken({required String studentId, required String phoneNumber, required String fcmToken});
+  Future<Result<List<AppNotification>>> getNotifications({required String studentId});
+  Future<Result<void>> markNotificationAsRead(String notificationId);
+
+  /// Catalog operations
+  Future<Result<List<Major>>> getMajors();
+  Future<Result<List<String>>> getLevels();
   Future<Result<List<University>>> getUniversities({String? type});
-   /// New: get majors with their available levels (dynamic)
-   Future<Result<List<MajorLevels>>> getMajorsWithLevels();
-   Future<Result<List<Course>>> getCourses({
-     required String majorId,
-     required String level,
-     required CourseTrack track,
-   });
-   Future<Result<List<Lecture>>> getLectures(String courseId);
-   Future<Result<Course>> getCourse(String courseId);
-   Future<Result<Instructor>> getInstructor(String instructorId);
- 
-   /// Library operations
-   Future<Result<List<Course>>> getLibraryCourses();
-   Future<Result<void>> requestActivation(String courseId);
- 
-   /// Enrollment operations
-   Future<Result<bool>> isUserEnrolledInCourse(String userId, String courseId);
-   Future<Result<List<Course>>> getUserActiveCourses(String userId);
- 
-   /// Search operations
-   Future<Result<List<Course>>> searchCourses(String query);
- 
-   /// Hero slider
-   Future<Result<List<String>>> getHeroImages();
- }
- 
- /// Mock implementation of ApiClient for UI-only development
- class MockApiClient implements ApiClient {
+  /// New: get majors with their available levels (dynamic)
+  Future<Result<List<MajorLevels>>> getMajorsWithLevels();
+  Future<Result<List<Course>>> getCourses({
+    required String majorId,
+    required String level,
+    required CourseTrack track,
+  });
+  Future<Result<List<Lecture>>> getLectures(String courseId);
+  Future<Result<Course>> getCourse(String courseId);
+  Future<Result<Instructor>> getInstructor(String instructorId);
+
+  /// Library operations
+  Future<Result<List<Course>>> getLibraryCourses();
+  Future<Result<void>> requestActivation(String courseId);
+
+  /// Enrollment operations
+  Future<Result<bool>> isUserEnrolledInCourse(String userId, String courseId);
+  Future<Result<List<Course>>> getUserActiveCourses(String userId);
+
+  /// Search operations
+  Future<Result<List<Course>>> searchCourses(String query);
+
+  /// Hero slider
+  Future<Result<List<String>>> getHeroImages();
+}
+
+/// Mock implementation of ApiClient for UI-only development
+class MockApiClient implements ApiClient {
   // Simulate network delays
   static const _networkDelay = Duration(milliseconds: 800);
   static const _otpValidity = Duration(minutes: 5);
@@ -316,6 +326,35 @@ import 'package:grace_academy/data/models/university.dart';
       return const Failure('الملف الشخصي غير موجود');
     }
     _users[phoneNumber] = existing.copyWith(telegramUsername: telegramUsername.trim());
+    return const Success(null);
+  }
+
+  // ---- Account Deletion (Mock) ----
+  
+  @override
+  Future<Result<String>> sendDeleteAccountOtp(String phone) async {
+    await Future.delayed(_networkDelay);
+    _otpIssuedAt[phone] = DateTime.now();
+    _otps[phone] = '123456'; 
+    return Success('mock_delete_request_id_${DateTime.now().millisecondsSinceEpoch}');
+  }
+
+  @override
+  Future<Result<String>> verifyDeleteAccountOtp(String phone, String otp, String requestId) async {
+    await Future.delayed(_networkDelay);
+    if (otp == '123456') {
+      return Success('mock_delete_token_${DateTime.now().millisecondsSinceEpoch}');
+    }
+    return const Failure('رمز التحقق غير صحيح');
+  }
+
+  @override
+  Future<Result<void>> confirmDeleteAccount(String phone, String verificationToken) async {
+    await Future.delayed(_networkDelay);
+    _users.remove(phone);
+    if (_currentPhone == phone) {
+      _currentPhone = null;
+    }
     return const Success(null);
   }
 

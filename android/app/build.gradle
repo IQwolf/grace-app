@@ -66,12 +66,19 @@ android {
         noCompress 'lite'
     }
 
-    // Enable 16 KB page size alignment for native libraries
-   /* externalNativeBuild {
-        cmake {
-            arguments "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
-        }
-    }*/
+    // NOTE: externalNativeBuild (CMake) was only used to pass a configure argument
+    // "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON". With modern AGP 7/8, the
+    // arguments() DSL here is not supported and causes build failures.
+    // This project does not include native CMake code, so we disable the block.
+    // If you later add C++ and need custom flags, move them to
+    // defaultConfig { externalNativeBuild { cmake { cppFlags "..." } } } and
+    // ensure a valid cmake { path "CMakeLists.txt" } is provided.
+    //
+    // externalNativeBuild {
+    //     cmake {
+    //         arguments "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+    //     }
+    // }
 
     buildTypes {
         release {

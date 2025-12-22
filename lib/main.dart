@@ -37,12 +37,12 @@ void main() async {
   // Do not enable FLAG_SECURE globally at startup.
   // Individual pages (e.g., VideoPlayerPage) will opt-in when needed.
   // If you want to re-enable globally, call: await SecureFlag.enableSecure();
-
+  
   // Enable edge-to-edge mode for Android 15+ compatibility
   SystemChrome.setEnabledSystemUIMode(
     SystemUiMode.edgeToEdge,
   );
-
+  
   // Set system UI overlay style
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -53,7 +53,7 @@ void main() async {
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );
-
+  
   debugPrint('[Main] runApp');
   runApp(
     const ProviderScope(
@@ -70,14 +70,14 @@ class EduPulseApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(routerProvider);
-
+    
     return MaterialApp.router(
       title: 'Grace Academy',
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.light,
-
+      
       // Arabic RTL support
       locale: const Locale('ar', 'IQ'),
       supportedLocales: const [
@@ -89,7 +89,7 @@ class EduPulseApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-
+      
       // RTL text direction
       builder: (context, child) {
         // Initialize FCM & notifications once (deferred to post-frame to avoid build-time context issues)
@@ -110,7 +110,7 @@ class EduPulseApp extends ConsumerWidget {
           child: child!,
         );
       },
-
+      
       routerConfig: router,
     );
   }

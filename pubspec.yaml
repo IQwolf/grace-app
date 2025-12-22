@@ -1,12 +1,13 @@
 name: grace_academy
 description: "Grace Academy - منصة تعليمية متكاملة لتقديم المحاضرات الدراسية مع حماية متقدمة للمحتوى وتجربة مستخدم سلسة."
 publish_to: "none"
-version: 1.0.1+4
+version: 1.0.1+3
 
 environment:
   sdk: ^3.6.0
 
 dependencies:
+  pinput: ^6.0.0
   url_launcher: ^6.3.1
   flutter_svg: ^2.0.15
   http: ^1.2.2
@@ -35,7 +36,7 @@ dependencies:
   cached_network_image: ^3.4.1
   carousel_slider: ^5.0.0
   shared_preferences: ^2.3.5
-
+  
 
 dev_dependencies:
   flutter_test:

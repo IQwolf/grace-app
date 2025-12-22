@@ -13,12 +13,12 @@ class MainActivity : FlutterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        
         // Enable edge-to-edge for backward compatibility with Android 15+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             WindowCompat.setDecorFitsSystemWindows(window, false)
         }
-
+        
         // Note: We no longer force FLAG_SECURE at launch.
         // Control is delegated to Dart via MethodChannel (enableSecure/disableSecure)
     }

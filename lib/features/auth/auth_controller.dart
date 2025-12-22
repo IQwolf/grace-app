@@ -14,7 +14,13 @@ import 'package:grace_academy/services/notification_service.dart';
 // API client provider
 // Keep Firebase out of the build until a backend is connected in Dreamflow.
 final apiClientProvider = Provider<ApiClient>((ref) {
-  if (AppConfig.USE_MOCK) return MockApiClient();
+  if (AppConfig.USE_MOCK) {
+    // ignore: avoid_print
+    print('[apiClientProvider] Using MockApiClient');
+    return MockApiClient();
+  }
+  // ignore: avoid_print
+  print('[apiClientProvider] Using RestApiClient');
   return RestApiClient();
 });
 

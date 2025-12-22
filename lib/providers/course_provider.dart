@@ -16,7 +16,7 @@ final coursesProvider = FutureProvider.family<List<Course>, CourseFilter>((ref, 
     level: filter.level,
     limit: filter.limit,
   );
-
+  
   return result.when(
     success: (courses) => courses,
     failure: (_) => [],
@@ -27,7 +27,7 @@ final coursesProvider = FutureProvider.family<List<Course>, CourseFilter>((ref, 
 final courseProvider = FutureProvider.family<Course?, String>((ref, courseId) async {
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.getCourse(courseId);
-
+  
   return result.when(
     success: (course) => course,
     failure: (_) => null,
@@ -38,7 +38,7 @@ final courseProvider = FutureProvider.family<Course?, String>((ref, courseId) as
 final courseLecturesProvider = FutureProvider.family<List<Lecture>, String>((ref, courseId) async {
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.getCourseLectures(courseId);
-
+  
   return result.when(
     success: (lectures) => lectures,
     failure: (_) => [],
@@ -49,7 +49,7 @@ final courseLecturesProvider = FutureProvider.family<List<Lecture>, String>((ref
 final lectureProvider = FutureProvider.family<Lecture?, String>((ref, lectureId) async {
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.getLecture(lectureId);
-
+  
   return result.when(
     success: (lecture) => lecture,
     failure: (_) => null,
@@ -60,7 +60,7 @@ final lectureProvider = FutureProvider.family<Lecture?, String>((ref, lectureId)
 final majorsProvider = FutureProvider<List<Major>>((ref) async {
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.getMajors();
-
+  
   return result.when(
     success: (majors) => majors,
     failure: (_) => [],
@@ -71,7 +71,7 @@ final majorsProvider = FutureProvider<List<Major>>((ref) async {
 final instructorsProvider = FutureProvider<List<Instructor>>((ref) async {
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.getInstructors();
-
+  
   return result.when(
     success: (instructors) => instructors,
     failure: (_) => [],
@@ -82,7 +82,7 @@ final instructorsProvider = FutureProvider<List<Instructor>>((ref) async {
 final instructorProvider = FutureProvider.family<Instructor?, String>((ref, instructorId) async {
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.getInstructor(instructorId);
-
+  
   return result.when(
     success: (instructor) => instructor,
     failure: (_) => null,
@@ -93,10 +93,10 @@ final instructorProvider = FutureProvider.family<Instructor?, String>((ref, inst
 final enrolledCoursesProvider = FutureProvider<List<Course>>((ref) async {
   final currentUser = ref.watch(currentUserProvider);
   if (currentUser == null) return [];
-
+  
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.getUserEnrolledCourses(currentUser.uid);
-
+  
   return result.when(
     success: (courses) => courses,
     failure: (_) => [],
@@ -106,10 +106,10 @@ final enrolledCoursesProvider = FutureProvider<List<Course>>((ref) async {
 // Provider for search results
 final searchResultsProvider = FutureProvider.family<List<Course>, String>((ref, query) async {
   if (query.trim().isEmpty) return [];
-
+  
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.searchCourses(query, limit: 20);
-
+  
   return result.when(
     success: (courses) => courses,
     failure: (_) => [],
@@ -120,10 +120,10 @@ final searchResultsProvider = FutureProvider.family<List<Course>, String>((ref, 
 final courseProgressProvider = FutureProvider.family<Map<String, double>, String>((ref, courseId) async {
   final currentUser = ref.watch(currentUserProvider);
   if (currentUser == null) return {};
-
+  
   final firestoreRepo = ref.watch(firestoreRepositoryProvider);
   final result = await firestoreRepo.getUserCourseProgress(currentUser.uid, courseId);
-
+  
   return result.when(
     success: (progress) => progress,
     failure: (_) => {},
@@ -147,19 +147,19 @@ class CourseController extends Notifier<AsyncValue<void>> {
     DateTime? expiresAt,
   }) async {
     state = const AsyncValue.loading();
-
+    
     final result = await _firestoreRepository.enrollUserInCourse(
       userId: userId,
       courseId: courseId,
       expiresAt: expiresAt,
     );
-
+    
     if (result.isSuccess) {
       state = const AsyncValue.data(null);
     } else {
       state = AsyncValue.error(result.error ?? 'Unknown error', StackTrace.current);
     }
-
+    
     return result;
   }
 
@@ -172,7 +172,7 @@ class CourseController extends Notifier<AsyncValue<void>> {
       userId: userId,
       courseId: courseId,
     );
-
+    
     return result.when(
       success: (isEnrolled) => isEnrolled,
       failure: (_) => false,
@@ -196,11 +196,11 @@ class CourseController extends Notifier<AsyncValue<void>> {
       totalDuration: totalDuration,
       completed: completed,
     );
-
+    
     if (result.isFailure) {
       state = AsyncValue.error(result.error ?? 'Unknown error', StackTrace.current);
     }
-
+    
     return result;
   }
 }
@@ -225,12 +225,12 @@ class CourseFilter {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is CourseFilter &&
-              runtimeType == other.runtimeType &&
-              majorId == other.majorId &&
-              track == other.track &&
-              level == other.level &&
-              limit == other.limit;
+      other is CourseFilter &&
+          runtimeType == other.runtimeType &&
+          majorId == other.majorId &&
+          track == other.track &&
+          level == other.level &&
+          limit == other.limit;
 
   @override
   int get hashCode => majorId.hashCode ^ track.hashCode ^ level.hashCode ^ limit.hashCode;
