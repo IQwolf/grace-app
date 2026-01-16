@@ -54,17 +54,17 @@ class AppStrings {
   static const String selectLevel = 'اختر المرحلة';
   static const String firstTrack = 'كورس أول';
   static const String secondTrack = 'كورس ثاني';
-  static const String freeLecture = 'متاحة للجميع';
-  static const String locked = 'غير متاحة';
+  static const String freeLecture = 'متاحة';
+  static const String locked = 'محتوى خاص';
   static const String lecturesCount = 'محاضرة';
   
   // Course
-  static const String requestActivation = 'طلب التفعيل';
+  static const String requestActivation = 'طلب الوصول';
   static const String sendRequest = 'إرسال الطلب';
-  static const String activationRequestMessage = 'سيتم إرسال طلب التفعيل للإدارة';
-  static const String requestSentMessage = 'تم إرسال الطلب، سيتم إشعارك عند التفعيل';
+  static const String activationRequestMessage = 'سيتم إرسال طلبك للإدارة';
+  static const String requestSentMessage = 'تم إرسال الطلب، سيتم إشعارك عند الموافقة';
   static const String telegramUsernameTitle = 'اسم مستخدم التليجرام';
-  static const String telegramUsernamePrompt = 'يرجى تزويدنا باسم مستخدمك على تليجرام حتى نتمكن من متابعتك وتفعيل طلبك.';
+  static const String telegramUsernamePrompt = 'يرجى تزويدنا باسم مستخدمك على تليجرام حتى نتمكن من التواصل معك.';
   static const String telegramUsernameHint = 'مثال: username أو @username';
   static const String telegramUsernameRequired = 'يرجى إدخال اسم مستخدم صالح بدون مسافات.';
   static const String telegramUsernameConfirmTitle = 'تأكيد اسم المستخدم';
@@ -74,11 +74,11 @@ class AppStrings {
   static const String missingPhoneForTelegram = 'تعذر تحديد رقم هاتف الحساب، يرجى تحديث ملفك الشخصي.';
   
   // Library
-  static const String subscribedCourses = 'مفعّلة';
-  static const String pendingActivation = 'قيد التفعيل';
+  static const String subscribedCourses = 'كورساتي';
+  static const String pendingActivation = 'قيد المراجعة';
   static const String openMaterials = 'المواد المفتوحة';
   static const String noCoursesFound = 'لا توجد كورسات';
-  static const String noCoursesFoundDesc = 'لم تقم بتفعيل أي كورس بعد';
+  static const String noCoursesFoundDesc = 'لا توجد كورسات مضافة بعد';
   
   // Account
   static const String support = 'الدعم';
@@ -110,6 +110,6 @@ class AppStrings {
   static const String onboardingDesc1 = 'اكتشف محاضرات عالية الجودة من أفضل المدرسين في العراق';
   static const String onboardingTitle2 = 'محتوى محمي وآمن';
   static const String onboardingDesc2 = 'جميع المحاضرات محمية ولا يمكن تسجيلها أو مشاركتها';
-  static const String onboardingTitle3 = 'تفعيل سهل وسريع';
-  static const String onboardingDesc3 = 'يمكنك طلب التفعيل بسهولة عبر التطبيق';
+  static const String onboardingTitle3 = 'وصول سهل وسريع';
+  static const String onboardingDesc3 = 'يمكنك الوصول للمحتوى بسهولة عبر التطبيق';
 }

@@ -400,7 +400,7 @@ class _CoursePageState extends ConsumerState<CoursePage> with WidgetsBindingObse
           borderRadius: BorderRadius.circular(12),
         ),
         child: Icon(
-          isLocked ? Icons.lock : Icons.play_arrow,
+          isLocked ? Icons.info_outline : Icons.play_arrow,
           color: lecture.isFree 
               ? Colors.green
               : isLocked 

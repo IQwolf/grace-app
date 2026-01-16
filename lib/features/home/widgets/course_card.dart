@@ -153,7 +153,7 @@ class CourseCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Text(
-          'مفعّل',
+          'متاح',
           style: TextStyle(
             color: EduPulseColors.primary,
             fontSize: 10,
