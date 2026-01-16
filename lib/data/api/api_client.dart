@@ -532,7 +532,7 @@ class MockApiClient implements ApiClient {
     try {
       return Success(_subscribedCourses.contains(courseId));
     } catch (e) {
-      return Failure('خطأ في التحقق من حالة الاشتراك: $e');
+      return Failure('خطأ في التحقق من حالة التفعيل: $e');
     }
   }
 

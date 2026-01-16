@@ -54,14 +54,14 @@ class AppStrings {
   static const String selectLevel = 'اختر المرحلة';
   static const String firstTrack = 'كورس أول';
   static const String secondTrack = 'كورس ثاني';
-  static const String freeLecture = 'محاضرة مجانية';
-  static const String locked = 'مقفلة';
+  static const String freeLecture = 'متاحة للجميع';
+  static const String locked = 'غير متاحة';
   static const String lecturesCount = 'محاضرة';
   
   // Course
   static const String requestActivation = 'طلب التفعيل';
   static const String sendRequest = 'إرسال الطلب';
-  static const String activationRequestMessage = 'سيتم إرسال طلب تفعيل الاشتراك للإدارة';
+  static const String activationRequestMessage = 'سيتم إرسال طلب التفعيل للإدارة';
   static const String requestSentMessage = 'تم إرسال الطلب، سيتم إشعارك عند التفعيل';
   static const String telegramUsernameTitle = 'اسم مستخدم التليجرام';
   static const String telegramUsernamePrompt = 'يرجى تزويدنا باسم مستخدمك على تليجرام حتى نتمكن من متابعتك وتفعيل طلبك.';
@@ -74,11 +74,11 @@ class AppStrings {
   static const String missingPhoneForTelegram = 'تعذر تحديد رقم هاتف الحساب، يرجى تحديث ملفك الشخصي.';
   
   // Library
-  static const String subscribedCourses = 'مشترَك بها';
+  static const String subscribedCourses = 'مفعّلة';
   static const String pendingActivation = 'قيد التفعيل';
   static const String openMaterials = 'المواد المفتوحة';
   static const String noCoursesFound = 'لا توجد كورسات';
-  static const String noCoursesFoundDesc = 'لم تقم بالاشتراك في أي كورس بعد';
+  static const String noCoursesFoundDesc = 'لم تقم بتفعيل أي كورس بعد';
   
   // Account
   static const String support = 'الدعم';
@@ -111,5 +111,5 @@ class AppStrings {
   static const String onboardingTitle2 = 'محتوى محمي وآمن';
   static const String onboardingDesc2 = 'جميع المحاضرات محمية ولا يمكن تسجيلها أو مشاركتها';
   static const String onboardingTitle3 = 'تفعيل سهل وسريع';
-  static const String onboardingDesc3 = 'يمكنك طلب تفعيل الاشتراك بسهولة عبر التطبيق';
+  static const String onboardingDesc3 = 'يمكنك طلب التفعيل بسهولة عبر التطبيق';
 }

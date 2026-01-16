@@ -663,7 +663,7 @@ class FirebaseApiClient implements ApiClient {
       }
       return const Success(true);
     } catch (e) {
-      return Failure('فشل فحص الاشتراك: $e');
+      return Failure('فشل فحص حالة التفعيل: $e');
     }
   }
 

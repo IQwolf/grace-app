@@ -1142,7 +1142,7 @@ class RestApiClient implements ApiClient {
       }
       return Failure(_mapHttpError(res));
     } catch (e) {
-      return Failure('خطأ في التحقق من الاشتراك: $e');
+      return Failure('خطأ في التحقق من حالة التفعيل: $e');
     }
   }
 
