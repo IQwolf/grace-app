@@ -49,7 +49,7 @@ class FirebaseApiClient implements ApiClient {
       // Cloud Functions is not available until Firebase is connected in Dreamflow.
       // Provide a graceful message instead of a compile-time dependency.
       return const Failure(
-        'خدمة OTP غير مفعلة. من فضلك افتح لوحة Firebase في Dreamflow وأكمل الإعداد.'
+        'خدمة OTP غير متوفرة. من فضلك افتح لوحة Firebase في Dreamflow وأكمل الإعداد.'
       );
     } catch (e) {
       return Failure(_mapFunctionsError(e));
@@ -62,7 +62,7 @@ class FirebaseApiClient implements ApiClient {
       await _ensureInitialized();
       // Cloud Functions is not available until Firebase is connected in Dreamflow.
       return const Failure(
-        'خدمة OTP غير مفعلة. من فضلك افتح لوحة Firebase في Dreamflow وأكمل الإعداد.'
+        'خدمة OTP غير متوفرة. من فضلك افتح لوحة Firebase في Dreamflow وأكمل الإعداد.'
       );
     } catch (e) {
       return Failure(_mapFunctionsError(e));
@@ -596,7 +596,7 @@ class FirebaseApiClient implements ApiClient {
 
       return const Success(null);
     } catch (e) {
-      return Failure('خطأ في إرسال طلب التفعيل: $e');
+      return Failure('خطأ في إرسال طلب الصلاحية: $e');
     }
   }
 
@@ -663,7 +663,7 @@ class FirebaseApiClient implements ApiClient {
       }
       return const Success(true);
     } catch (e) {
-      return Failure('فشل فحص حالة التفعيل: $e');
+      return Failure('فشل فحص حالة الصلاحية: $e');
     }
   }
 
@@ -697,7 +697,7 @@ class FirebaseApiClient implements ApiClient {
       }
       return Success(list);
     } catch (e) {
-      return Failure('فشل جلب الكورسات المفعلة: $e');
+      return Failure('فشل جلب الكورسات المتاحة: $e');
     }
   }
 

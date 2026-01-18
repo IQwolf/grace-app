@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:grace_academy/utils/image_utils.dart';
 import 'package:grace_academy/app_router.dart';
 import 'package:grace_academy/core/strings.dart';
@@ -492,86 +491,45 @@ class _CoursePageState extends ConsumerState<CoursePage> with WidgetsBindingObse
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text(AppStrings.missingPhoneForTelegram),
+          content: const Text(AppStrings.missingPhoneForRequest),
           backgroundColor: EduPulseColors.error,
         ),
       );
       return;
     }
 
-    final apiClient = ref.read(apiClientProvider);
-    String? telegramUsername = user.telegramUsername;
-    final usernameLookup = await apiClient.getTelegramUsername(phoneNumber: user.phone);
-    usernameLookup.when(
-      success: (value) {
-        if (value != null && value.isNotEmpty) {
-          telegramUsername = value;
-        }
-      },
-      failure: (error) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(error),
-              backgroundColor: EduPulseColors.error,
+    // Show confirmation dialog before sending request
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text(AppStrings.requestAccessTitle),
+        content: const Text(AppStrings.requestAccessMessage),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text(AppStrings.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(
+              AppStrings.sendRequest,
+              style: TextStyle(color: EduPulseColors.primary),
             ),
-          );
-        }
-      },
+          ),
+        ],
+      ),
     );
 
-    String? usernameCandidate = telegramUsername;
-    String? enteredUsername;
-    while (true) {
-      if (!context.mounted) return;
-      final input = await _askForTelegramUsername(context, initialValue: usernameCandidate);
-      if (input == null) {
-        return;
-      }
-      if (!context.mounted) return;
-      final action = await _confirmTelegramUsername(context, input);
-      if (action == _TelegramConfirmAction.confirm) {
-        enteredUsername = input;
-        break;
-      }
-      if (action == _TelegramConfirmAction.edit) {
-        usernameCandidate = input;
-        continue;
-      }
-      return;
-    }
+    if (confirmed != true || !context.mounted) return;
 
-    if (enteredUsername == null) {
-      return;
-    }
-
-    if (!context.mounted) return;
+    // Show loading indicator
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (_) => const Center(child: CircularProgressIndicator()),
     );
 
-    final updateResult = await apiClient.updateTelegramUsername(
-      phoneNumber: user.phone,
-      telegramUsername: enteredUsername,
-    );
-
-    if (updateResult is Failure<void>) {
-      if (context.mounted) {
-        Navigator.of(context, rootNavigator: true).pop();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(updateResult.error),
-            backgroundColor: EduPulseColors.error,
-          ),
-        );
-      }
-      return;
-    }
-
-    await ref.read(authControllerProvider.notifier).fetchCurrentUser();
-
+    final apiClient = ref.read(apiClientProvider);
     final activationResult = await apiClient.requestActivation(course.id);
 
     if (context.mounted) {
@@ -603,112 +561,4 @@ class _CoursePageState extends ConsumerState<CoursePage> with WidgetsBindingObse
     }
   }
 
-  Future<String?> _askForTelegramUsername(BuildContext context, {String? initialValue}) async {
-    String value = initialValue ?? '';
-    String? errorText;
-
-    final result = await showDialog<String>(
-      context: context,
-      barrierDismissible: false,
-      builder: (dialogContext) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              title: const Text(AppStrings.telegramUsernameTitle),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(AppStrings.telegramUsernamePrompt),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    initialValue: value,
-                    autofocus: true,
-                    textDirection: TextDirection.ltr,
-                    onChanged: (newValue) {
-                      value = newValue;
-                      if (errorText != null) {
-                        setState(() => errorText = null);
-                      }
-                    },
-                    decoration: InputDecoration(
-                      hintText: AppStrings.telegramUsernameHint,
-                      errorText: errorText,
-                    ),
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(dialogContext).pop(null),
-                  child: const Text(AppStrings.cancel),
-                ),
-                TextButton(
-                  onPressed: () {
-                    final trimmed = value.trim();
-                    if (trimmed.isEmpty || trimmed.contains(' ')) {
-                      setState(() => errorText = AppStrings.telegramUsernameRequired);
-                      return;
-                    }
-                    Navigator.of(dialogContext).pop(trimmed);
-                  },
-                  child: Text(
-                    AppStrings.next,
-                    style: TextStyle(color: EduPulseColors.primary),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-
-    return result;
-  }
-
-  Future<_TelegramConfirmAction> _confirmTelegramUsername(BuildContext context, String username) async {
-    final result = await showDialog<_TelegramConfirmAction>(
-      context: context,
-      barrierDismissible: false,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: const Text(AppStrings.telegramUsernameConfirmTitle),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(AppStrings.telegramUsernameConfirmMessage),
-              const SizedBox(height: 8),
-              Text(
-                username,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                textDirection: TextDirection.ltr,
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(_TelegramConfirmAction.cancel),
-              child: const Text(AppStrings.cancel),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(_TelegramConfirmAction.edit),
-              child: const Text(AppStrings.edit),
-            ),
-            TextButton(
-              onPressed: () => Navigator.of(dialogContext).pop(_TelegramConfirmAction.confirm),
-              child: Text(
-                AppStrings.yesImSure,
-                style: TextStyle(color: EduPulseColors.primary),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-    return result ?? _TelegramConfirmAction.cancel;
-  }
 }
-
-enum _TelegramConfirmAction { confirm, edit, cancel }

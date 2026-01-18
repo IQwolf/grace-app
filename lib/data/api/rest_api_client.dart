@@ -1109,7 +1109,7 @@ class RestApiClient implements ApiClient {
       }
       return Failure(_mapHttpError(res));
     } catch (e) {
-      return Failure('خطأ في إرسال طلب التفعيل: $e');
+      return Failure('خطأ في إرسال طلب الصلاحية: $e');
     }
   }
 
@@ -1142,7 +1142,7 @@ class RestApiClient implements ApiClient {
       }
       return Failure(_mapHttpError(res));
     } catch (e) {
-      return Failure('خطأ في التحقق من حالة التفعيل: $e');
+      return Failure('خطأ في التحقق من حالة الصلاحية: $e');
     }
   }
 
@@ -1210,7 +1210,7 @@ class RestApiClient implements ApiClient {
       }
       return Failure(_mapHttpError(res));
     } catch (e) {
-      return Failure('خطأ في جلب الكورسات المفعلة: $e');
+      return Failure('خطأ في جلب الكورسات المتاحة: $e');
     }
   }
 

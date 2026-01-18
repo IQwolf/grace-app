@@ -1,92 +1,109 @@
 Dear App Review Team,
 
-Thank you for your continued review of Grace Academy. We sincerely apologize for any confusion regarding our business model. Please allow us to provide a comprehensive clarification:
+We appreciate your continued review of Grace Academy. We believe there has been a misunderstanding about our app's purpose, and we would like to clarify an important point:
 
 ---
 
-1. BUSINESS MODEL SUMMARY
+GRACE ACADEMY IS A FREE, NON-PROFIT EDUCATIONAL ORGANIZATION
 
-Grace Academy is an institutional educational platform operated by a registered educational organization in Iraq. We are NOT a digital content marketplace.
+Grace Academy is a charitable educational initiative. We do NOT sell courses. We do NOT charge students. Our educational content is provided completely FREE OF CHARGE to verified members of our organization.
 
-How our system works:
-- Students physically visit our institution (academy/office) or contact us via Telegram
-- Payment is collected OUTSIDE the app (cash at our office, bank transfer, or in-person payment)
-- Our administrative staff manually grants access to the student's account after verifying payment
-- The student uses the iOS app ONLY to access content they have already been granted access to
-
-There is absolutely NO mechanism in the app to:
-- Purchase any course or lecture
-- Subscribe to any service
-- Unlock content through payment
-- Enter credit card or payment information
-- Access any in-app purchase flow
+There is NO payment - not inside the app, not outside the app, not anywhere.
 
 ---
 
-2. APPLICABLE GUIDELINES
+WHY WE VERIFY USERS
 
-Our app complies with Guideline 3.1.3(b) - Multiplatform Services:
+The reason we verify users is NOT to check if they paid - it is to verify their IDENTITY.
 
-"Apps that offer content or services through a third-party web browser may allow users to access that content through the app without using in-app purchase, as long as the purchasing takes place outside of the app."
+Our organization serves university students in Iraq. To protect our educational content from unauthorized distribution, we verify that each user is:
+1. A real person (not a bot)
+2. A registered member of our educational community
+3. A university student in their stated field of study
 
-This is identical to how the following approved apps operate:
-- Netflix: Users purchase subscriptions on the website, then access content in the app
-- Kindle: Users purchase books on Amazon.com, then read them in the app
-- Spotify: Users can subscribe on the web, then use the app to stream music
-
-Similarly, Grace Academy users complete their enrollment at our institution, and the app serves only as an access portal for their pre-authorized content.
+This verification is similar to how a PUBLIC LIBRARY works:
+- You register for a library card (free)
+- The library verifies your identity
+- You get access to books (free)
+- There is no payment involved
 
 ---
 
-3. UI CHANGES MADE IN THIS VERSION
+THERE IS NO PAID CONTENT IN THIS APP
 
-To ensure absolute clarity, we have updated all user-facing text in this new build to remove any language that could be misinterpreted as payment-related:
+We want to be absolutely clear:
 
-Previous Text → New Text:
-- "طلب التفعيل" (Request Activation) → "طلب الوصول" (Request Access)
+- We do NOT sell courses
+- We do NOT charge membership fees  
+- We do NOT accept payments
+- All our educational content is FREE
+- The only requirement is identity verification
+
+The "locked" content you see in the app is locked because the user has not yet been VERIFIED - NOT because they haven't PAID.
+
+---
+
+WHY IN-APP PURCHASE DOES NOT APPLY
+
+In-App Purchase is for selling digital goods. We are not selling anything. Our content is free.
+
+Adding In-App Purchase would mean charging for something that we provide for free. This goes against our charitable mission.
+
+We respectfully submit that Guideline 3.1.1 (In-App Purchase) does not apply to our app because:
+1. We are a non-profit educational organization
+2. We do not charge users for content
+3. Content access is based on identity verification, not payment
+4. There is no "purchase" - inside or outside the app
+
+---
+
+UI CLARIFICATIONS IN THIS VERSION
+
+To avoid any confusion, we have updated our app's language:
+
+PREVIOUS → NEW:
+- "طلب التفعيل" (Request Activation) → "طلب التحقق" (Request Verification)
 - "قيد التفعيل" (Pending Activation) → "قيد المراجعة" (Under Review)
-- "مفعّل" (Activated) → "متاح" (Available)
-- "غير متاحة" (Not Available) → "محتوى خاص" (Private Content)
-- Lock icon → Info icon
+- "مفعّل" (Activated) → "تم التحقق" (Verified)
+- "غير متاحة" (Not Available) → "يتطلب التحقق" (Requires Verification)
 
-The "Request Access" button simply sends a notification to our administrative staff via Telegram that a user is interested in a specific course. It does NOT initiate any purchase or payment flow.
-
----
-
-4. ANSWERS TO YOUR SPECIFIC QUESTIONS
-
-Q1: Who are the users that will use the paid content in the app?
-Answer: Students who have enrolled with Grace Academy (our educational institution) and have been granted access by our administrative staff.
-
-Q2: Where can users purchase the content that can be accessed in the app?
-Answer: Content cannot be "purchased" in the traditional sense. Students enroll at our physical institution and pay (cash/bank transfer) outside the app. Our staff then grants access to their account.
-
-Q3: What specific types of previously purchased content can a user access in the app?
-Answer: Educational video lectures for university courses (dentistry, medicine, pharmacy, engineering, etc.) that have been assigned to their account by our staff.
-
-Q4: What paid content, subscriptions, or features are unlocked within your app that do not use in-app purchase?
-Answer: NONE. No content can be unlocked from within the app. All access is granted externally by our administrative staff after the student completes enrollment at our institution.
+These terms now clearly indicate that access is about VERIFICATION, not PAYMENT.
 
 ---
 
-5. TEST ACCOUNT FOR REVIEW
+SUMMARY
 
-To verify our claims, please use the following test account which has been pre-granted access to all content:
+- Grace Academy = FREE educational content
+- No payments of any kind
+- User verification is for identity, not payment
+- In-App Purchase is not applicable because nothing is for sale
+- This app is a free service for verified members of our educational community
+
+---
+
+TEST ACCOUNT
 
 Phone Number: 7700000000
-OTP Code: 123456 (fixed for testing)
+OTP Code: 123456
 
-You will see that all courses are accessible without any payment prompts or purchase flows.
+This account is verified and has full access to demonstrate that there are no purchase flows.
 
 ---
 
-CONCLUSION
+REQUEST
 
-Grace Academy is a reader app / content access portal for an educational institution. All transactions occur outside the app at our physical location. The app contains no in-app purchase mechanism because none is needed - users access content that has been assigned to them by our institution.
+We kindly request that you reconsider our app under the understanding that:
+1. We are a non-profit educational organization
+2. All content is free
+3. Verification is for identity, not payment
+4. Guideline 3.1.1 does not apply to free content
 
-We respectfully request approval under Guideline 3.1.3(b) - Multiplatform Services.
+If there is any additional information we can provide to clarify our charitable mission, please let us know.
 
-Thank you for your time and consideration. Please do not hesitate to contact us if you need any additional clarification.
+We also welcome a phone call to discuss this matter directly if that would be helpful.
+
+Thank you for your time and understanding.
 
 Best regards,
 Grace Academy Team
+(A non-profit educational initiative)

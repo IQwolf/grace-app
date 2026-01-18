@@ -60,9 +60,9 @@ class AppStrings {
   
   // Course
   static const String requestActivation = 'طلب الوصول';
-  static const String sendRequest = 'إرسال الطلب';
+  static const String sendRequest = 'إرسال';
   static const String activationRequestMessage = 'سيتم إرسال طلبك للإدارة';
-  static const String requestSentMessage = 'تم إرسال الطلب، سيتم إشعارك عند الموافقة';
+  static const String requestSentMessage = 'تم إرسال طلب الصلاحية بنجاح. الحالة: قيد المراجعة';
   static const String telegramUsernameTitle = 'اسم مستخدم التليجرام';
   static const String telegramUsernamePrompt = 'يرجى تزويدنا باسم مستخدمك على تليجرام حتى نتمكن من التواصل معك.';
   static const String telegramUsernameHint = 'مثال: username أو @username';
@@ -72,6 +72,9 @@ class AppStrings {
   static const String confirm = 'تأكيد';
   static const String yesImSure = 'نعم، متأكد';
   static const String missingPhoneForTelegram = 'تعذر تحديد رقم هاتف الحساب، يرجى تحديث ملفك الشخصي.';
+  static const String missingPhoneForRequest = 'تعذر تحديد رقم هاتف الحساب، يرجى تحديث ملفك الشخصي.';
+  static const String requestAccessTitle = 'طلب صلاحية';
+  static const String requestAccessMessage = 'سيتم إرسال طلب صلاحية للتحقق من اختصاصك. ستصلك نتيجة الطلب داخل التطبيق بعد المراجعة.';
   
   // Library
   static const String subscribedCourses = 'كورساتي';

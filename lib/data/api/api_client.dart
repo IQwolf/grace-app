@@ -147,8 +147,8 @@ class MockApiClient implements ApiClient {
       AppNotification(
         id: 'n1',
         studentId: studentId,
-        title: 'تم تفعيل حسابك',
-        body: 'مبروك! تم تفعيل حسابك ويمكنك البدء الآن',
+        title: 'تم منحك الصلاحية',
+        body: 'مبروك! تم منحك الصلاحية ويمكنك البدء الآن',
         type: 'activation',
         status: 'sent',
         createdAt: now.subtract(const Duration(hours: 3)),
@@ -521,7 +521,7 @@ class MockApiClient implements ApiClient {
       _activationRequests.add(courseId);
       return const Success(null);
     } catch (e) {
-      return Failure('خطأ في إرسال طلب التفعيل: $e');
+      return Failure('خطأ في إرسال طلب الصلاحية: $e');
     }
   }
 
@@ -532,7 +532,7 @@ class MockApiClient implements ApiClient {
     try {
       return Success(_subscribedCourses.contains(courseId));
     } catch (e) {
-      return Failure('خطأ في التحقق من حالة التفعيل: $e');
+      return Failure('خطأ في التحقق من حالة الصلاحية: $e');
     }
   }
 
@@ -546,7 +546,7 @@ class MockApiClient implements ApiClient {
           .toList();
       return Success(courses);
     } catch (e) {
-      return Failure('خطأ في جلب الكورسات المفعلة: $e');
+      return Failure('خطأ في جلب الكورسات المتاحة: $e');
     }
   }
 

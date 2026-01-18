@@ -195,7 +195,7 @@ class _DeleteAccountDialogState extends ConsumerState<DeleteAccountDialog> {
         ),
         const SizedBox(height: 8),
         Text(
-          'سيؤدي هذا الإجراء إلى حذف جميع بياناتك وتفعيلاتك بشكل نهائي. لا يمكن التراجع عن هذا الإجراء.',
+          'سيؤدي هذا الإجراء إلى حذف جميع بياناتك وصلاحياتك بشكل نهائي. لا يمكن التراجع عن هذا الإجراء.',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: EduPulseColors.textMain.withValues(alpha: 0.7),
               ),
